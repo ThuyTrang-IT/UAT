@@ -26,7 +26,7 @@ it("Enter email successfully", async () => {
   await page.type('#email','pham01000@gmail.com');
   await page.click("button[type='submit']");
   
-  await page.waitForNavigation(); // đợi cho trang web chuyển hướng
+  await page.waitForNavigation({ waitUntil: 'networkidle2' }); // đợi cho trang web chuyển hướng
 
   const title = await page.title();
   expect(title).to.equal('Gcalls - Đăng ký');
