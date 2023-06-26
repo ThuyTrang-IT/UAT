@@ -164,7 +164,7 @@ describe("Testing signup page", () => {
 
 
   
-it("8/Sign up unsuccessfully with 33 characters", async function () {
+it("Sign up unsuccessfully with 33 characters", async function () {
   const url = "https://app.gcalls.co/b/confirm/7f4d92d0f55eafad589c7b987919246c9455ce79633172addee4f12f45e8ad95f3ea6ac601609f6e27cda559712cd3ebb42a7";
   await page.goto(url);
   const password = "khongnhokhongnhokhongnhokhongnhoo";
@@ -183,7 +183,7 @@ it("8/Sign up unsuccessfully with 33 characters", async function () {
 
   expect(errorMessage.trim()).to.equal('Mật khẩu không đúng định dạng');
 });
-it("9/Missing all fields", async function () {
+it("Missing all fields", async function () {
   const url = "https://app.gcalls.co/b/confirm/7f4d92d0f55eafad589c7b987919246c9455ce79633172addee4f12f45e8ad95f3ea6ac601609f6e27cda559712cd3ebb42a7";
   await page.goto(url);
 
@@ -195,7 +195,7 @@ it("9/Missing all fields", async function () {
 
   expect(errorMessage.trim()).to.equal('Mật khẩu không được rỗng');
 });
-it("10/Missing password field", async function () {
+it("Missing password field", async function () {
   const url = "https://app.gcalls.co/b/confirm/7f4d92d0f55eafad589c7b987919246c9455ce79633172addee4f12f45e8ad95f3ea6ac601609f6e27cda559712cd3ebb42a7";
   await page.goto(url);
   const re_password = "12345678910";
@@ -210,7 +210,7 @@ it("10/Missing password field", async function () {
 
   expect(errorMessage.trim()).to.equal('Mật khẩu không được rỗng');
 });
-it("11/Missing confirm password field", async function () {
+it("Missing confirm password field", async function () {
   const url = "https://app.gcalls.co/b/confirm/7f4d92d0f55eafad589c7b987919246c9455ce79633172addee4f12f45e8ad95f3ea6ac601609f6e27cda559712cd3ebb42a7";
   await page.goto(url);
   const password = "12345678910";
@@ -226,7 +226,7 @@ it("11/Missing confirm password field", async function () {
 
   expect(errorMessage.trim()).to.equal('Nhập lại mật khẩu không được rỗng');
 });
-it("12/Confirm password does not match the password", async function () {
+it("Confirm password does not match the password", async function () {
   const url = "https://app.gcalls.co/b/confirm/7f4d92d0f55eafad589c7b987919246c9455ce79633172addee4f12f45e8ad95f3ea6ac601609f6e27cda559712cd3ebb42a7";
   await page.goto(url);
   const password = "12345678910";
@@ -245,7 +245,7 @@ it("12/Confirm password does not match the password", async function () {
 
   expect(errorMessage.trim()).to.equal('Nhập lại mật khẩu không trùng khớp');
 });
-it("13/Sign up successfully with 8 characters", async function () {
+it("Sign up successfully with 8 characters", async function () {
   const url = "https://app.gcalls.co/b/confirm/7f4d92d0f55eafad589c7b987919246c9455ce79633172addee4f12f45e8ad95f3ea6ac601609f6e27cda559712cd3ebb42a7";
   await page.goto(url);
   const password = "12345678";
@@ -262,7 +262,7 @@ it("13/Sign up successfully with 8 characters", async function () {
   const urlSignin = await page.url();
   expect(urlSignin).to.equal("https://app.gcalls.co/g/login");
 });
-it("14/Sign up successfully", async function () {
+it("Sign up successfully", async function () {
   const url = "https://app.gcalls.co/b/confirm/7f4d92d0f55eafad589c7b987919246c9455ce79633172addee4f12f45e8ad95f3ea6ac601609f6e27cda559712cd3ebb42a7";
   await page.goto(url);
   const password = "12345678910";
@@ -279,7 +279,7 @@ it("14/Sign up successfully", async function () {
   const urlSignin = await page.url();
   expect(urlSignin).to.equal("https://app.gcalls.co/g/login");
 });
-it("15/Sign up successfully with 32 characters", async function () {
+it("Sign up successfully with 32 characters", async function () {
   const url = "https://app.gcalls.co/b/confirm/7f4d92d0f55eafad589c7b987919246c9455ce79633172addee4f12f45e8ad95f3ea6ac601609f6e27cda559712cd3ebb42a7";
   await page.goto(url);
   const password = "12345678901234567890123456789012";

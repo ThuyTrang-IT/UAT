@@ -1,4 +1,4 @@
-/* const puppeteer = require('puppeteer');
+const puppeteer = require('puppeteer');
 const { expect } = require('chai');
 
 let browser, page;
@@ -163,4 +163,4 @@ it("Email with invalid domain", async () => {
 
 after(async () => {
   await browser.close();
-}); */
+}); 
