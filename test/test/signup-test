@@ -1,0 +1,137 @@
+const puppeteer = require("puppeteer");
+const expect = require("chai").expect;
+const MailosaurClient = require('mailosaur');
+
+const Mailosaur = require("mailosaur");
+let recipientEmail = "";
+let callCenter = "";
+
+
+
+const client = new Mailosaur("bgJZdSxfl1EzkPFdHPli9rVN0L4OfI9a");
+
+
+
+describe("Testing signup page", () => {
+  let page;
+  let browser;
+  before(async () => {
+      browser = await puppeteer.launch({
+      headless: false,
+      defaultViewport: null,
+      
+      args: ["--start-maximized"],
+      
+      timeout: 60000
+    });
+
+  }); // Func called before all test
+
+  beforeEach(async () => {
+    
+    page.setDefaultNavigationTimeout(0);
+    recipientEmail =
+      (Math.random() + 1).toString(36).substring(7) + "@kdxv4iu6.mailosaur.net";
+    callCenter = "testing-" + (Math.random() + 1).toString(36).substring(7);
+    console.log("recipientEmail", recipientEmail);
+    console.log("callCenter", callCenter);
+    await page.setBypassCSP(true);
+    await page.goto("https://app.gcalls.co/g/login", { waitUntil: "networkidle2", timeout: 0 });
+    await page.click("a.logo");
+
+    });
+    async function signupSuccessed({callCenter,email}) {
+      
+        await page.focus("#tenant");
+        await page.keyboard.type(callCenter);
+        await page.focus("#email");
+        await page.keyboard.type(email);
+        await page.click("button[type='submit']");
+        
+      }
+
+      async function testcaseCreatePsw() {
+        let emailAccount = recipientEmail;
+        let serverId = "kdxv4iu6";
+        let criteria = {
+          sentTo: emailAccount,
+          subject: "Welcome to Gcalls - Important first steps",
+        };
+        const email = await client.messages.get(serverId, criteria);
+        const firstLink = email.html.links[0];
+        page = await browser.newPage();
+        await page.goto(firstLink.href);
+        await page.waitForTimeout(5000);
+        const url = page.url();
+        return url;
+      }
+    
+      async function inputPswField({ psw, confirmPsw, isFailed }) {
+        await page.focus("#password");
+        await page.keyboard.type(psw);
+        await page.focus("#passwordConfirm");
+        await page.keyboard.type(confirmPsw);
+        await page.click("button");
+        await page.waitForTimeout(15000);
+      
+        if (!isFailed) {
+          await page.waitForNavigation({ waitUntil: "networkidle2" });
+          const url = page.url();
+          return url;
+        } else {
+          return page.url();
+        }
+      
+      }
+      async function handleErrorInputField() {
+        const errorMessage = await page.evaluate(() => {
+          const errorPsw = document.querySelector("#passwordError")!;
+          const errorPswConfirm = document.querySelector("#passwordConfirmError")!;
+          return {
+            errorPsw: errorPsw.textContent?.trim() || '',
+            errorPswConfirm: errorPswConfirm.textContent?.trim() || '',
+          };
+        });
+        return errorMessage;
+      }
+    
+    
+
+      it("Confirming email", async () => {
+        await page.waitForSelector(".swal-button.swal-button--confirm");
+        await page.click(".swal-button.swal-button--confirm");
+    
+        await signupSuccessed({
+          callCenter: callCenter,
+          email: recipientEmail,
+        });
+        const url = await testcaseCreatePsw();
+        expect(url).toContain("https://app.gcalls.co/");
+      });
+      it("Sign up successfully", async () => {
+        await page.waitForSelector(".swal-button.swal-button--confirm");
+        await page.click(".swal-button.swal-button--confirm");
+    
+        await signupSuccessed({
+          callCenter: callCenter,
+          email: recipientEmail,
+        });
+        await testcaseCreatePsw();
+        const url = await inputPswField({
+            psw: "12345678910",
+            confirmPsw: "12345678910",
+            isFailed: false,
+          });
+        console.log("url: " + url);
+        expect(url).toContain("/login");
+      });
+    
+    
+    
+        
+        
+        
+    
+
+    
+});
